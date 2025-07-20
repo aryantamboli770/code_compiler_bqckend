@@ -1,0 +1,23 @@
+# Fast docker-compose.yml - Optimized for speed
+version: '3.8'
+
+services:
+  # Your main app - run directly without Docker for faster development
+  # Use: npm run dev (keep this running normally)
+
+  code-executor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: 0.3
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=50m
+
+# Remove MongoDB from Docker - use local MongoDB for faster development
+# Install locally: brew install mongodb (Mac) or apt install mongodb (Ubuntu)
